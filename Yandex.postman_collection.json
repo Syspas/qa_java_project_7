@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "fd6e9446-0c69-4947-9646-9128f126f30d",
+		"name": "Yandex",
+		"description": "# Финальный проект 7 спринта\n\nТебе предстоит протестировать API учебного сервиса [Яндекс.Самокат](http://qa-scooter.praktikum-services.ru/). Его документация: [qa-scooter.praktikum-services.ru/docs/](https://qa-scooter.praktikum-services.ru/docs/).Перед тем как писать тесты, протестируй API вручную в Postman. Это поможет разобраться, как работают запросы.Чтобы вспомнить материал спринта, загляни в [шпаргалки](https://praktikum.notion.site/API-9229b699ce7041e38a4f03ea7a777e81).\n\n### Подготовка\n\nПеред тем как приступить к заданиям:\n\n1. Создай Maven-проект.\n    \n2. Назови проект Sprint_7.\n    \n3. Подключи JUnit 4, RestAssured, Allure.\n    \n\n### **Протестируй ручки**\n\nПроверь, что они корректно работают и выдают нужные ошибки.\n\n1. **Создание курьера**\n    \n\nПроверь:\n\n- курьера можно создать;\n    \n- нельзя создать двух одинаковых курьеров;\n    \n- чтобы создать курьера, нужно передать в ручку все обязательные поля;\n    \n- запрос возвращает правильный код ответа;\n    \n- успешный запрос возвращает `ok: true`**;**\n    \n- если одного из полей нет, запрос возвращает ошибку;\n    \n- если создать пользователя с логином, который уже есть, возвращается ошибка.\n    \n\n1. **Логин курьера**\n    \n\nПроверь:\n\n- курьер может авторизоваться;\n    \n- для авторизации нужно передать все обязательные поля;\n    \n- система вернёт ошибку, если неправильно указать логин или пароль;\n    \n- если какого-то поля нет, запрос возвращает ошибку;\n    \n- если авторизоваться под несуществующим пользователем, запрос возвращает ошибку;\n    \n- успешный запрос возвращает `id`.\n    \n\n1. **Создание заказа**\n    \n\nПроверь, что когда создаёшь заказ:\n\n- можно указать один из цветов — BLACK или GREY;\n    \n- можно указать оба цвета;\n    \n- можно совсем не указывать цвет;\n    \n- тело ответа содержит `track`.\n    \n\nЧтобы протестировать создание заказа, нужно использовать параметризацию.\n\n1. **Список заказов**\n    \n\nПроверь, что в тело ответа возвращается список заказов.\n\n1. **Отчёт Allure**\n    \n\nСгенерируй его и запушь в репозиторий.Обрати внимание: всю папку target коммитить не нужно. Чтобы добавить в коммит только отчёт, можно перейти в папку проекта в консоли и выполнить команды:Скопировать кодBASH\n\n``` bash\n# добавляем папку с отчётом Allure к файлам. Ключ -f пригодится, если папка target указана в .gitignore\ngit add -f .\\target\\allure-results\\.\n# выполняем коммит\ngit commit -m \"add allure report\"\n# так отправишь файлы в удалённый репозиторий\ngit push \n\n ```\n\nНе забудь: тесты должны быть независимыми. Все данные нужно удалять после того, как тест выполнится. Если для проверки нужен пользователь, создай его перед тестом и удали после.\n\n### Дополнительное задание\n\nЭто задание можешь выполнить по желанию: оно не повлияет на оценку за основную часть, но поможет дополнительно попрактиковаться. Протестируй ручки:\n\n1. **Удалить курьера**\n    \n\nС методом DELETE можно работать так же, как с другими методами. Проверь:\n\n- неуспешный запрос возвращает соответствующую ошибку;\n    \n- успешный запрос возвращает `ok: true`**;**\n    \n- если отправить запрос без `id`, вернётся ошибка;\n    \n- если отправить запрос с несуществующим `id`, вернётся ошибка.\n    \n\n1. **Принять заказ**\n    \n\nПроверь:\n\n- успешный запрос возвращает `ok: true`;\n    \n- если не передать `id` курьера, запрос вернёт ошибку;\n    \n- если передать неверный `id` курьера, запрос вернёт ошибку;\n    \n- если не передать номер заказа, запрос вернёт ошибку;\n    \n- если передать неверный номер заказа, запрос вернёт ошибку.\n    \n\n1. **Получить заказ по его номеру**\n    \n\nПроверь:\n\n- успешный запрос возвращает объект с заказом;\n    \n- запрос без номера заказа возвращает ошибку;\n    \n- запрос с несуществующим заказом возвращает ошибку.\n    \n\nВ запросах 2 и 3 дополнительного задания нужно передавать query-параметры.Query-параметры — это параметры в форме «имя параметра — значение». Строка запроса с параметрами выглядит так: `some_url?parameter1=1&parameter2=some_value`.Из чего она состоит:\n\n- ручка `some_url`,\n    \n- параметр `parameter1` с числовым значением 1,\n    \n- `parameter2` со строковым значением `some_value`.\n    \n\nПосле пути к ручке нужно поставить `?`. Параметры отделяются друг от друга знаком `&`.Посмотри, как передать такой запрос в RestAssured:Скопировать кодJAVA\n\n``` java\n            given()\n                // здесь всё как обычно\n        .auth().oauth2(\"введи_сюда_свой_токен\")\n                // в этих строчках параметры переданы в запрос\n        .queryParam(\"parameter1\", \"1\")\n        .queryParam(\"parameter2\", \"some_value\")\n        .get(\"some_url\")\n        .then() \n          ... // дальше всё как обычно \n\n ```\n\nОбрати внимание на метод `queryParam`: туда передают имя параметра и его значение.Как видишь, эту строчку можно повторять несколько раз — столько, сколько нужно передать параметров.\n\n### Как будут оценивать твою работу\n\n**Для основного задания**\n\n1. Нейминг элементов корректный. Если не помнишь правила, посмотри [в шпаргалку](https://code.s3.yandex.net/qa-automation-engineer/java/cheatsheets/paid-track/sprint2/namingRules.pdf).\n    \n2. В `pom.xml` нет ничего лишнего.\n    \n3. Тесты лежат в `src/test/java`.\n    \n4. Для каждой ручки тесты лежат в отдельном классе.\n    \n5. Написаны тесты на ручку «Создать курьера».\n    \n6. Написаны тесты на ручку «Логин курьера».\n    \n7. Написаны тесты на ручку «Создать заказ».\n    \n8. Написаны тесты на ручку, которая получает список заказов.\n    \n9. Для всех шагов автотестов должна быть использована аннотация `@Step`.\n    \n10. Сделан отчёт с помощью Allure. Не забудь закоммитить его.\n    \n11. В тестах проверяется тело и код ответа.\n    \n12. Все тесты независимы.\n    \n13. Необходимые тестовые данные создаются перед тестом и удаляются после того, как он выполнится.\n    \n14. В тестах нет хардкода.\n    \n15. В проекте используется Java 11.\n    \n\n**Для дополнительного задания** Правила те же, что и для основного задания. Что ещё:\n\n1. Написаны тесты на ручку «Удалить курьера».\n    \n2. Написаны тесты на ручку «Принять заказ».\n    \n3. Написаны тесты на ручку «Получить заказ по его номеру».\n    \n\n### Как сдать работу\n\nПрочитай [инструкцию](https://code.s3.yandex.net/qa-automation-engineer/java/track2/cheatsheets/sprint7/upload_project_7.pdf). Прежде чем отправить проектПроверь себя [по чек-листу](https://code.s3.yandex.net/qa-automation-engineer/java/cheatsheets/paid-track/sprint7/java_checklist_2.pdf). Он поможет разобраться: проект правильно загружен на GitHub или нет. Если загрузишь решение неправильно, ревьюер вернёт его на доработку.EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29404331"
+	},
+	"item": [
+		{
+			"name": "1 . Курьер (Courier)",
+			"item": [
+				{
+					"name": "1.1 Courier - Логин курьера в системе",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/courier/login?login=ninja&password=1234",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courier",
+								"login"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "ninja"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 Courier - Создание курьера",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courier?login=ninja&password=1234&firstName=saske",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courier"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "ninja",
+									"description": "Логин курьера, записывается в поле login таблицы Couriers"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"description": "Пароль курьера, хэш от значения записывается в поле passwordHash таблицы Couriers"
+								},
+								{
+									"key": "firstName",
+									"value": "saske",
+									"description": "Имя курьера, записывается в поле firstName таблицы Couriers"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 Courier - Удаление курьера",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courier/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courier",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Курьеры (Couriers)",
+			"item": [
+				{
+					"name": "2.1 Couriers - Получить количество заказов курьера",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courier/:id/ordersCount",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courier",
+								":id",
+								"ordersCount"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Заказы (Orders)",
+			"item": [
+				{
+					"name": "3.1 Orders - Завершить заказ",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/orders/finish/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"finish",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123",
+									"description": "Номер заказа, хранится в поле id таблицы Orders"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.2 Orders - Отменить заказ",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/orders/cancel?track=123456",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "track",
+									"value": "123456",
+									"description": "Номер заказа, хранится в поле track таблицы Orders"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.3 Orders - Получение списка заказов",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/orders?courierId=100&nearestStation=1&limit=30&page=0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "courierId",
+									"value": "100",
+									"description": "Идентификатор курьера. Если указан - возвращает все активные и завершенные заказы этого курьера"
+								},
+								{
+									"key": "nearestStation",
+									"value": "1",
+									"description": "Фильтр станций метро. Передается в виде JSON, например: { nearestStation: [\"1\", \"2\"] }. При передаче, финальная выдача фильтруется по указанным станциям метро"
+								},
+								{
+									"key": "limit",
+									"value": "30",
+									"description": "Количество заказов на странице. Максимум: 30"
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Текущая страница показа заказов. По умолчанию: 0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.4 Orders - Получить заказ по его номеру",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/orders/track?t=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"track"
+							],
+							"query": [
+								{
+									"key": "t",
+									"value": "10",
+									"description": "Трекинговый номер заказа"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.5 Orders - Принять заказ",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/orders/accept/:id?courierId=213",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"accept",
+								":id"
+							],
+							"query": [
+								{
+									"key": "courierId",
+									"value": "213",
+									"description": "Id курьера, хранится в поле id таблицы Couriers"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "10",
+									"description": "\tНомер заказа, хранится в поле id таблицы Orders"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.6 Orders - Создание заказа",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/orders?firstName=Naruto&lastName=Uchiha&address=Konoha, 142 apt.&metroStation=4&phone=+7 800 355 35 35&rentTime=5&deliveryDate=2020-06-06&comment=Saske, come back to Konoha&color=BLACK",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Naruto",
+									"description": "Имя заказчика, записывается в поле firstName таблицы Orders"
+								},
+								{
+									"key": "lastName",
+									"value": "Uchiha",
+									"description": "Фамилия заказчика, записывается в поле lastName таблицы Orders"
+								},
+								{
+									"key": "address",
+									"value": "Konoha, 142 apt.",
+									"description": "Адрес заказчика, записывается в поле adress таблицы Orders"
+								},
+								{
+									"key": "metroStation",
+									"value": "4",
+									"description": "Ближайшая к заказчику станция метро, записывается в поле metroStation таблицы Orders"
+								},
+								{
+									"key": "phone",
+									"value": "+7 800 355 35 35",
+									"description": "Телефон заказчика, записывается в поле phone таблицы Orders"
+								},
+								{
+									"key": "rentTime",
+									"value": "5",
+									"description": "Количество дней аренды, записывается в поле rentTime таблицы Orders"
+								},
+								{
+									"key": "deliveryDate",
+									"value": "2020-06-06",
+									"description": "Дата доставки, записывается в поле deliveryDate таблицы Orders"
+								},
+								{
+									"key": "comment",
+									"value": "Saske, come back to Konoha",
+									"description": "Комментарий от заказчика, записывается в поле comment таблицы Orders"
+								},
+								{
+									"key": "color",
+									"value": "BLACK",
+									"description": "Предпочитаемые цвета, записываются в поле color таблицы Orders"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Утилиты (Utils)",
+			"item": [
+				{
+					"name": "1. Utils - Ping server",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/ping",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ping"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Utils - Поиск станций метро по названию",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/stations/search?s=Сокол",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stations",
+								"search"
+							],
+							"query": [
+								{
+									"key": "s",
+									"value": "Сокол",
+									"description": "Строка для поиска станции"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
