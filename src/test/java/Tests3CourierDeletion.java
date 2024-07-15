@@ -1,6 +1,8 @@
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -28,7 +30,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @Epic("API Тестирование")
 @Feature("Удаление курьера")
-public class CourierDeletionTests3 extends BaseAPITest {
+public class Tests3CourierDeletion extends BaseAPITest {
 
     @Test
     @DisplayName("Успешное удаление курьера")
@@ -41,6 +43,7 @@ public class CourierDeletionTests3 extends BaseAPITest {
     @TmsLink("TEST-456")
     public void testSuccessfulCourierDeletion() {
         given()
+                .baseUri(baseURI)
                 .delete("/api/v1/courier/3")
                 .then()
                 .statusCode(200)
@@ -55,6 +58,7 @@ public class CourierDeletionTests3 extends BaseAPITest {
     @Story("Отсутствие ID при удалении курьера")
     public void testMissingIdOnCourierDeletion() {
         given()
+                .baseUri(baseURI)
                 .delete("/api/v1/courier/")
                 .then()
                 .statusCode(400)
@@ -70,6 +74,7 @@ public class CourierDeletionTests3 extends BaseAPITest {
     @Story("Удаление несуществующего курьера")
     public void testNonexistentIdCourierDeletion() {
         given()
+                .baseUri(baseURI)
                 .delete("/api/v1/courier/999")
                 .then()
                 .statusCode(404)
