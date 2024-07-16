@@ -30,7 +30,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @Epic("API Тестирование")
 @Feature("Удаление курьера")
-public class Tests3CourierDeletion extends BaseAPITest {
+public class Test_3_CourierDeletion extends BaseAPITest {
 
     @Test
     @DisplayName("Успешное удаление курьера")

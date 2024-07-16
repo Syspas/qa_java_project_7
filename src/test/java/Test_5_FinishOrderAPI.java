@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Tests5FinishOrderAPI extends BaseAPITest {
+public class Test_5_FinishOrderAPI extends BaseAPITest {
 
     @Test
     public void testFinishOrderSuccess() {

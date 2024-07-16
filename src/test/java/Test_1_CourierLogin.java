@@ -15,9 +15,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
  * /api/v1/courier/login
  */
 @Story("Вход курьера")
-public class Tests1CourierLogin extends BaseAPITest {
+public class Test_1_CourierLogin extends BaseAPITest {
 
-    private static final Logger logger = LoggerFactory.getLogger(Tests1CourierLogin.class);
+    private static final Logger logger = LoggerFactory.getLogger(Test_1_CourierLogin.class);
 
     /**
      * Проверка успешного входа курьера с верными учетными данными

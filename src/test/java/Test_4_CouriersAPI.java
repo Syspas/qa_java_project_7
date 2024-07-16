@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-public class Tests4CouriersAPI extends BaseAPITest {
+public class Test_4_CouriersAPI extends BaseAPITest {
 
     @Description("Класс для тестирования API эндпоинта Couriers")
     @Step("Получение количества заказов курьера")
