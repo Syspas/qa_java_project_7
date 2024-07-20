@@ -5,7 +5,7 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Test_12_Utils extends BaseAPITest {
+public class Test12Utils extends BaseAPITest {
     /**
      * Проверка успешного ответа на запрос ping сервера
      */

@@ -30,17 +30,16 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @Epic("API Тестирование")
 @Feature("Удаление курьера")
-public class Test_3_CourierDeletion extends BaseAPITest {
+public class Test3CourierDeletion extends BaseAPITest {
 
     @Test
     @DisplayName("Успешное удаление курьера")
     @Description("Тест проверяет успешное удаление курьера по его ID")
-    @Severity(SeverityLevel.CRITICAL)
-    @Owner("username")
+    @Severity(SeverityLevel.CRITICAL)//Важность теста критическая
     @Story("Успешное удаление курьера")
-    @Link(name = "API Documentation", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
-    @Issue("BUG-123")
-    @TmsLink("TEST-456")
+    @Link(name = "API Documentation Courier - Удаление курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
+    @Issue("BUG-123") // ошибка
+    @TmsLink("TEST-456") // ссылка на задачу допустим которая описывает работу теста
     public void testSuccessfulCourierDeletion() {
         given()
                 .baseUri(baseURI)
@@ -53,8 +52,8 @@ public class Test_3_CourierDeletion extends BaseAPITest {
     @Test
     @DisplayName("Отсутствие ID при удалении курьера")
     @Description("Тест проверяет ответ API при попытке удаления курьера без указания ID")
+    @Link(name = "API Documentation Courier - Удаление курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
     @Severity(SeverityLevel.NORMAL)
-    @Owner("username")
     @Story("Отсутствие ID при удалении курьера")
     public void testMissingIdOnCourierDeletion() {
         given()
@@ -68,9 +67,9 @@ public class Test_3_CourierDeletion extends BaseAPITest {
 
     @Test
     @DisplayName("Удаление несуществующего курьера")
+    @Link(name = "API Documentation Courier - Удаление курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
     @Description("Тест проверяет ответ API при попытке удаления курьера с несуществующим ID")
     @Severity(SeverityLevel.MINOR)
-    @Owner("username")
     @Story("Удаление несуществующего курьера")
     public void testNonexistentIdCourierDeletion() {
         given()

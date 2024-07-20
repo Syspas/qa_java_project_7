@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 *   https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber
 */
 
-public class Test_9_OrderNumberReceiver extends BaseAPITest  {
+public class Test9OrderNumberReceiver extends BaseAPITest  {
 
     /**
      * Тест для получения заказа по номеру трекинга.

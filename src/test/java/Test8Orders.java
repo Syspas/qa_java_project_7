@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
  */
 
 
-public class Test_8_Orders extends BaseAPITest {
+public class Test8Orders extends BaseAPITest {
 
     @Test
     public void testGetOrderByNumber() {

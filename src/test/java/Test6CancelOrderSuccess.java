@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.*;
  * /api/v1/orders/cancel
  */
 
-public class Test_6_CancelOrderSuccess extends BaseAPITest  {
+public class Test6CancelOrderSuccess extends BaseAPITest  {
 
     /**
      * Тест для успешной отмены заказа.

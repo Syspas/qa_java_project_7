@@ -2,7 +2,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
-public class Test_11_OrderCreation extends BaseAPITest {
+public class Test11OrderCreation extends BaseAPITest {
 
     /**
      * Тест для проверки успешного создания заказа.

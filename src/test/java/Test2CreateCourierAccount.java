@@ -17,7 +17,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
  * - **firstName (string):** Имя курьера, которое записывается в поле firstName таблицы Couriers.
  */
 @Story("Создание учетной записи курьера")
-public class Test_2_CreateCourierAccount extends BaseAPITest {
+public class Test2CreateCourierAccount extends BaseAPITest {
 
     @Step("Создание учетной записи курьера с заданными параметрами")
     @Test

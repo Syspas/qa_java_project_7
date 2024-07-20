@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.*;
  */
 
 
-public class Test_10_OrderReceiver extends BaseAPITest {
+public class Test10OrderReceiver extends BaseAPITest {
 
 
     @Test

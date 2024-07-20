@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-public class Test_13_MetroStationSearchUtils {
+public class Test13MetroStationSearchUtils {
 
     /**
      * Поиск станции метро по названию "Сокол"

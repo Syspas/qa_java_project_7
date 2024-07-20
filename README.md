@@ -191,3 +191,7 @@ Sprint_7/
 ``` shell
 allure serve target\allure-results
 ```
+Запустить тесты
+``` shell
+mvn clean test
+```

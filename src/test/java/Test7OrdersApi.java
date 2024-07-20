@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.*;
  */
 
 
-public class Test_7_OrdersApi extends BaseAPITest {
+public class Test7OrdersApi extends BaseAPITest {
 
        @Test
     void testGetOrdersWithoutCourierId() {
