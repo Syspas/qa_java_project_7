@@ -37,6 +37,7 @@ public class Test10OrderReceiver extends BaseAPITest {
     @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
     @Issue("PROJECT-123") // Замените на реальный номер задачи
     @TmsLink("TMS-456") // Замените на реальный номер тест-кейса
+    @Step("Проверяет, что заказ может быть успешно принят курьером.")
     public void testOrderAcceptance() {
         int orderId = 1;
         int courierId = 213;
@@ -59,6 +60,7 @@ public class Test10OrderReceiver extends BaseAPITest {
     @Description("Проверяет, что при попытке принять несуществующий заказ возвращается статус 404.")
     @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
     @Severity(SeverityLevel.NORMAL)
+    @Step("Проверяет, что при попытке принять несуществующий заказ возвращается статус 404.")
     public void testOrderNotFound() {
         int orderId = 999;
         int courierId = 213;
@@ -79,6 +81,7 @@ public class Test10OrderReceiver extends BaseAPITest {
     @DisplayName("Проверка кода статуса для курьера, не найденного")
     @Description("Проверяет, что при попытке принять заказ курьером, который не найден, возвращается статус 404.")
     @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
+    @Step("Проверяет, что при попытке принять несуществующий заказ возвращается статус 404.")
     @Severity(SeverityLevel.NORMAL)
     public void testCourierNotFound() {
         int orderId = 1;
@@ -101,6 +104,7 @@ public class Test10OrderReceiver extends BaseAPITest {
     @Description("Проверяет, что возвращается статус 409, если заказ уже в процессе выполнения.")
     @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
     @Severity(SeverityLevel.NORMAL)
+    @Step("Проверка кода статуса для заказа, который уже в процессе выполнения")
     public void testOrderAlreadyInProgress() {
         int orderId = 1;
         int courierId = 213;

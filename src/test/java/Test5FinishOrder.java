@@ -1,15 +1,8 @@
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.Link;
-import io.qameta.allure.Issue;
-import io.qameta.allure.TmsLink;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
-import io.qameta.allure.SeverityLevel;
+
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +23,7 @@ public class Test5FinishOrder extends BaseAPITest {
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
     @Story("Завершение существующего заказа")
+    @Step("Проверяет успешное завершение заказа по действительному ID.")
     public void testFinishOrderSuccess() {
         int orderId = 123;
         Response response = given()
@@ -56,6 +50,7 @@ public class Test5FinishOrder extends BaseAPITest {
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
     @Story("Проверка обработки отсутствующего ID")
+    @Step("Проверяет ответ сервера при попытке завершить заказ без ID.")
     public void testFinishOrderWithoutId() {
         Response response = given()
                 .contentType("application/json")
@@ -81,6 +76,7 @@ public class Test5FinishOrder extends BaseAPITest {
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
     @Story("Проверка обработки несуществующего ID заказа")
+    @Step("Проверяет ответ сервера, если ID заказа не существует.")
     public void testFinishOrderNonExistingId() {
         int nonExistingOrderId = 999;
         Response response = given()
@@ -107,6 +103,7 @@ public class Test5FinishOrder extends BaseAPITest {
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
     @Story("Проверка обработки несуществующего ID курьера")
+    @Step("Проверяет ответ сервера, если ID курьера не существует.")
     public void testFinishOrderNonExistingCourier() {
         int nonExistingCourierId = 999;
         Response response = given()
@@ -134,6 +131,7 @@ public class Test5FinishOrder extends BaseAPITest {
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
     @Story("Обработка конфликта при завершении заказа")
+    @Step("Проверяет ответ сервера, если заказ нельзя завершить.")
     public void testFinishOrderConflict() {
         int orderId = 456; // ID заказа, который нельзя завершить
         Response response = given()

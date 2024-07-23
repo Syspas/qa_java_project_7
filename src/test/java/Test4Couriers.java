@@ -55,8 +55,9 @@ public class Test4Couriers extends BaseAPITest {
     @DisplayName("Проверка количества заказов для курьера с ID 1")
     @Severity(SeverityLevel.CRITICAL)
     @Link(name = "API Documentation Couriers - Получить количество заказов курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Couriers-GetOrdersCountByCourierId")
-    @Issue("12345")
+    @Issue("T-712345")
     @TmsLink("TMS-101")
+    @Step("Проверка количества заказов для курьера с ID 1")
     public void testOrdersCountExistingCourier() {
         int courierId = 1;
         Response response = getOrdersCountForCourier(courierId);
@@ -68,8 +69,9 @@ public class Test4Couriers extends BaseAPITest {
     @DisplayName("Проверка количества заказов при отсутствии ID курьера")
     @Severity(SeverityLevel.NORMAL)
     @Link(name = "API Documentation Couriers - Получить количество заказов курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Couriers-GetOrdersCountByCourierId")
-    @Issue("12346")
+    @Issue("T-112346")
     @TmsLink("TMS-102")
+    @Step("Проверка количества заказов при отсутствии ID курьера")
     public void testOrdersCountMissingId() {
         logger.warn("Тестирование случая с отсутствующим ID курьера.");
         Response response = getOrdersCountForCourier(0); // Изменено на 0 или на другое значение по умолчанию
@@ -81,8 +83,9 @@ public class Test4Couriers extends BaseAPITest {
     @DisplayName("Проверка количества заказов для несуществующего курьера")
     @Severity(SeverityLevel.NORMAL)
     @Link(name = "API Documentation Couriers - Получить количество заказов курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Couriers-GetOrdersCountByCourierId")
-    @Issue("12347")
+    @Issue("T-12347")
     @TmsLink("TMS-103")
+    @Step("Проверка количества заказов для несуществующего курьера")
     public void testOrdersCountNonExistingCourier() {
         int courierId = 999;
         logger.warn("Тестирование случая с несуществующим курьером с ID: " + courierId);

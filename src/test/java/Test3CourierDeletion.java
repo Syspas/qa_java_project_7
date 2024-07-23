@@ -41,6 +41,7 @@ public class Test3CourierDeletion extends BaseAPITest {
     @Link(name = "API Documentation Courier - Удаление курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
     @Issue("BUG-123") // ошибка
     @TmsLink("TEST-456") // ссылка на задачу допустим которая описывает работу теста
+    @Step("Успешное удаление курьера")
     public void testSuccessfulCourierDeletion() {
         given()
                 .baseUri(baseURI)
@@ -56,6 +57,7 @@ public class Test3CourierDeletion extends BaseAPITest {
     @Link(name = "API Documentation Courier - Удаление курьера", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Courier-DeleteCourier")
     @Severity(SeverityLevel.NORMAL)
     @Story("Отсутствие ID при удалении курьера")
+    @Step("Отсутствие ID при удалении курьера")
     public void testMissingIdOnCourierDeletion() {
         given()
                 .baseUri(baseURI)
@@ -72,6 +74,7 @@ public class Test3CourierDeletion extends BaseAPITest {
     @Description("Тест проверяет ответ API при попытке удаления курьера с несуществующим ID")
     @Severity(SeverityLevel.MINOR)
     @Story("Удаление несуществующего курьера")
+    @Step("Удаление несуществующего курьера")
     public void testNonexistentIdCourierDeletion() {
         given()
                 .baseUri(baseURI)

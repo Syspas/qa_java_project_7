@@ -34,6 +34,7 @@ public class Test6CancelOrderSuccess extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-CancelOrder")
     @Issue("TICKET-123")
     @TmsLink("TEST-456")
+    @Step("Проверяет успешную отмену заказа по действительному трек-номеру.")
     public void testCancelOrderSuccess() {
         String trackNumber = "123456";
         Response response = given()
@@ -65,6 +66,7 @@ public class Test6CancelOrderSuccess extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-CancelOrder")
     @Issue("TICKET-124")
     @TmsLink("TEST-457")
+    @Step("Проверяет ответ сервера при отсутствии номера заказа.")
     public void testCancelOrderMissingTrackNumber() {
         Response response = given()
                 .baseUri(baseURI)
@@ -94,6 +96,7 @@ public class Test6CancelOrderSuccess extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-CancelOrder")
     @Issue("TICKET-125")
     @TmsLink("TEST-458")
+    @Step("Проверяет ответ сервера при попытке отменить несуществующий заказ.")
     public void testCancelOrderOrderNotFound() {
         String nonExistingTrackNumber = "999999";
         Response response = given()
@@ -125,6 +128,7 @@ public class Test6CancelOrderSuccess extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-CancelOrder")
     @Issue("TICKET-126")
     @TmsLink("TEST-459")
+    @Step("Проверяет ответ сервера при попытке отменить заказ, который уже в работе.")
     public void testCancelOrderOrderAlreadyInProgress() {
         String inProgressTrackNumber = "789012";
         Response response = given()

@@ -63,6 +63,7 @@ public class Test8Orders extends BaseAPITest {
     @DisplayName("Получить информацию о заказе с валидным трекинговым номером")
     @Description("Тест проверяет, что запрос с валидным трекинговым номером возвращает информацию о заказе.")
     @Severity(SeverityLevel.NORMAL)
+    @Step("Тест проверяет, что запрос с валидным трекинговым номером возвращает информацию о заказе.")
     @Test
     public void testGetOrder_ValidTrackNumber_ReturnsOrderInfo() {
         String trackNumber = "123456";
@@ -84,6 +85,7 @@ public class Test8Orders extends BaseAPITest {
     @DisplayName("Получить информацию о несуществующем заказе")
     @Description("Тест проверяет, что запрос с несуществующим трекинговым номером возвращает статус 404.")
     @Severity(SeverityLevel.CRITICAL)
+    @Step("Тест проверяет, что запрос с несуществующим трекинговым номером возвращает статус 404.")
     @Test
     public void testGetOrder_InvalidTrackNumber_ReturnsNotFound() {
         String trackNumber = "999999";

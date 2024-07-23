@@ -1,9 +1,11 @@
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.baseURI;
 import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
+
 
 /**
  * @Epic - Эпик, к которому относится данный класс тестов.
@@ -18,16 +20,28 @@ import static io.restassured.RestAssured.given;
  *   t - номер трекинга заказа (number)
  *   @Link https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber
  */
+
+@Epic ("API Тестирование")
+@Feature ("тестирования API получения заказов по номеру трекинга")
+@Story ("Тест для получения заказа ")
 public class Test9OrderNumberReceiver extends BaseAPITest {
 
     /**
-     * @DisplayName Тест для получения заказа по номеру трекинга.
-     * @Description В этом тесте проверяется корректность получения заказа по трекинговому номеру.
-     * @Severity Critical
-     * @Link https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber
-     * @Issue BUG-1234
-     * @TmsLink TC-789
+     * @DisplayName - указывает на наглядное название теста.
+     * @Description - добавляет описание теста.
+     * @Severity - задает уровень важности теста.
+     * @Link - добавляет ссылку на документацию API.
+     * @Issue - связывает тест с задачей в системе отслеживания ошибок.
+     * @TmsLink - связывает тест с тест-кейсом в системе управления тестами.
+     * @Step - добавляет шаг теста.
      */
+    @DisplayName("Тест для получения заказа по номеру трекинга.")
+    @Description("В этом тесте проверяется корректность получения заказа по трекинговому номеру.")
+    @Severity(SeverityLevel.CRITICAL)
+    @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber")
+    @Issue("BUG-1234")
+    @TmsLink("TC-789")
+    @Step("В этом тесте проверяется корректность получения заказа по трекинговому номеру.")
     @Test
     public void testGetOrderByTrackingNumber() {
         String trackingNumber = "123456";
@@ -62,11 +76,10 @@ public class Test9OrderNumberReceiver extends BaseAPITest {
         // Дополнительные проверки и утверждения можно добавить сюда
     }
 
-    /**
-     * @DisplayName Тест для получения деталей заказа по номеру трекинга.
-     * @Description В этом тесте проверяется корректность получения деталей заказа по трекинговому номеру.
-     * @Severity Normal
-     */
+    @DisplayName ("Тест для получения деталей заказа по номеру трекинга.")
+    @Description ("В этом тесте проверяется корректность получения деталей заказа по трекинговому номеру.")
+    @Severity(SeverityLevel.NORMAL)
+    @Step("В этом тесте проверяется корректность получения деталей заказа по трекинговому номеру.")
     @Test
     public void testGetOrderDetailsByTrackingNumber() {
         String trackingNumber = "1234567890"; // Пример существующего трекингового номера
@@ -80,11 +93,10 @@ public class Test9OrderNumberReceiver extends BaseAPITest {
                 .body("trackingNumber", equalTo(trackingNumber)); // Проверка, что трекинговый номер совпадает
     }
 
-    /**
-     * @DisplayName Тест на некорректный запрос при отсутствии номера трекинга.
-     * @Description В этом тесте проверяется обработка ситуации, когда номер трекинга не указан.
-     * @Severity Minor
-     */
+    @DisplayName ("Тест на некорректный запрос при отсутствии номера трекинга.")
+    @Description ("В этом тесте проверяется обработка ситуации, когда номер трекинга не указан.")
+    @Severity(SeverityLevel.MINOR)
+    @Step("В этом тесте проверяется обработка ситуации, когда номер трекинга не указан.")
     @Test
     public void testBadRequestWhenNoTrackingNumberProvided() {
         given()
@@ -95,11 +107,10 @@ public class Test9OrderNumberReceiver extends BaseAPITest {
                 .body("message", equalTo("Недостаточно данных для поиска"));
     }
 
-    /**
-     * @DisplayName Тест на отсутствие заказа с указанным трекинговым номером.
-     * @Description В этом тесте проверяется обработка ситуации, когда заказ с указанным трекинговым номером не найден.
-     * @Severity Minor
-     */
+    @DisplayName ("Тест на отсутствие заказа с указанным трекинговым номером.")
+    @Description ("В этом тесте проверяется обработка ситуации, когда заказ с указанным трекинговым номером не найден.")
+    @Severity(SeverityLevel.MINOR)
+    @Step("Тест на отсутствие заказа с указанным трекинговым номером.")
     @Test
     public void testOrderNotFound() {
         String nonExistingTrackingNumber = "9999999999"; // Пример несуществующего трекингового номера

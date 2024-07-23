@@ -97,6 +97,7 @@ public class Test7Orders extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrdersPageByPage")
     @Issue("ICKET-129")
     @TmsLink(" TEST-462")
+    @Step("Проверяет обработку запроса с несуществующим курьером")
     @Test
     void testGetOrdersWithInvalidCourierId() {
     int invalidCourierId = 999;
@@ -121,6 +122,7 @@ public class Test7Orders extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrdersPageByPage")
     @Issue("TICKET-130")
     @TmsLink("TEST-463")
+    @Step(" Проверяет фильтрацию заказов по указанным станциям")
     @Test
     void testGetOrdersWithNearestStations() {
         String nearestStationsJson = "{\"nearestStation\": [\"1\", \"2\"]}";
@@ -149,6 +151,7 @@ public class Test7Orders extends BaseAPITest {
     @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrdersPageByPage")
     @Issue("TICKET-131")
     @TmsLink("TEST-464")
+    @Step("Проверяет параметры пагинации при запросе заказов")
     @Test
     void testGetOrdersWithPagination() {
         int limit = 10;
