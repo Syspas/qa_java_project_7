@@ -1,8 +1,10 @@
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
-import static io.restassured.RestAssured.given;
 
 /**
  * Orders - Получить заказ по его номеру
@@ -15,12 +17,20 @@ import static io.restassured.RestAssured.given;
  *
  * Запрос: /v1/orders/track?t=123456
  *
- * https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber
+ * Документация API: https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber
  */
-
-
+@Epic("Заказы")
+@Feature("Получение информации о заказах")
+@Story("Поиск заказа по трекинговому номеру")
 public class Test8Orders extends BaseAPITest {
 
+    @DisplayName("Получить заказ по номеру")
+    @Description("Тест проверяет возможность получения информации о заказе по трекинговому номеру.")
+    @Severity(SeverityLevel.NORMAL)
+    @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrderByTrackNumber")
+    @Issue("12345") // Замените на реальный номер задачи
+    @TmsLink("TC-7890") // Замените на реальный номер тест-кейса
+    @Step("Получение заказа с трекинговым номером 123456")
     @Test
     public void testGetOrderByNumber() {
         given()
@@ -50,12 +60,13 @@ public class Test8Orders extends BaseAPITest {
                 .body("order.updatedAt", equalTo("2020-06-08T14:40:28.219Z"));
     }
 
+    @DisplayName("Получить информацию о заказе с валидным трекинговым номером")
+    @Description("Тест проверяет, что запрос с валидным трекинговым номером возвращает информацию о заказе.")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testGetOrder_ValidTrackNumber_ReturnsOrderInfo() {
-        // Задаем трекинговый номер
         String trackNumber = "123456";
 
-        // Выполняем GET запрос
         Response response = given()
                 .baseUri(baseURI)
                 .queryParam("t", trackNumber)
@@ -65,23 +76,21 @@ public class Test8Orders extends BaseAPITest {
                 .extract()
                 .response();
 
-        // Проверяем успешный ли запрос
         response.then().statusCode(200);
-
-        // Проверяем содержание ответа
-        response.then().body("message", nullValue()); // Проверка на отсутствие сообщения об ошибке
-        response.then().body("orderNumber", equalTo(trackNumber)); // Проверка на соответствие номера заказа
-        // Другие проверки на содержание данных заказа, если необходимо
+        response.then().body("message", nullValue());
+        response.then().body("orderNumber", equalTo(trackNumber));
     }
 
+    @DisplayName("Получить информацию о несуществующем заказе")
+    @Description("Тест проверяет, что запрос с несуществующим трекинговым номером возвращает статус 404.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void testGetOrder_InvalidTrackNumber_ReturnsNotFound() {
-        // Задаем несуществующий трекинговый номер
         String trackNumber = "999999";
 
-        // Выполняем GET запрос
         Response response = given()
                 .baseUri(baseURI)
+
                 .queryParam("t", trackNumber)
                 .when()
                 .get("/orders/track")
@@ -89,10 +98,7 @@ public class Test8Orders extends BaseAPITest {
                 .extract()
                 .response();
 
-        // Проверяем, что вернулся статус 404 Not Found
         response.then().statusCode(404);
-
-        // Проверяем содержание ответа
         response.then().body("message", equalTo("Заказ не найден"));
     }
 }

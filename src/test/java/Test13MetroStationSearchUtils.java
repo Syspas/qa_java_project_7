@@ -1,20 +1,34 @@
+import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
+@Epic("Поиск метро")
+@Feature("Поиск станции по названию")
+@Story("Тестирование поиска станции метро по названию")
 public class Test13MetroStationSearchUtils {
 
     /**
-     * Поиск станции метро по названию "Сокол"
+     * Тестирование поиска станции метро по названию "Сокол".
+     *
+     * Этот тест отправляет запрос на поиск станции метро и проверяет,
+     * что ответ содержит ожидаемые данные. Проверяются как минимальные,
+     * так и дополнительные станции, соответствующие запросу.
      */
+    @DisplayName("Поиск станции метро по названию 'Сокол'")
+    @Description("Тест проверяет успешность поиска станции метро по названию 'Сокол' и валидирует данные ответа.")
+    @Severity(SeverityLevel.NORMAL)
+    @Link("https://qa-scooter.praktikum-services.ru/docs/#api-Utils-StationsSearch") // Замените на реальную ссылку
+    @Issue("12345") // Замените на существующий номер задачи
+    @TmsLink("TC-7890") // Замените на существующий номер тест-кейса
+    @Step("Отправка запроса на поиск станции метро по названию 'Сокол'")
     @Test
     public void testSearchMetroStation() {
 
-
+        // Отправка GET-запроса с параметром для поиска станции метро
         Response response = given()
                 .baseUri(baseURI)
                 .queryParam("s", "Сокол")
@@ -24,6 +38,7 @@ public class Test13MetroStationSearchUtils {
                 .extract()
                 .response();
 
+        // Проверка кода статуса и данных ответа
         assertEquals(200, response.getStatusCode());
         assertEquals("4", response.jsonPath().getString("[0].number"));
         assertEquals("Сокольники", response.jsonPath().getString("[0].name"));

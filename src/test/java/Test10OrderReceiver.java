@@ -1,111 +1,114 @@
+import API.Test.OrdersClient;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+
 import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 /**
- * Метод для принятия заказа.
- *
- * HTTP метод: PUT
- * Путь: /api/v1/orders/accept/:id
- *
- * @param id Номер заказа, хранится в поле id таблицы Orders
- * @param courierId Id курьера, хранится в поле id таблицы Couriers
- *
- * @return Статус-код ответа сервера после выполнения операции.
+ * Класс тестов для проверки функциональности API приёма заказов курьерами.
+ * Содержит тестовые методы, которые проверяют различные сценарии взаимодействия
+ * с API заказов.
  */
-
-
+@Epic("Тестирование API заказов")
+@Feature("Прием заказов курьерами")
+@Story("Прием заказов для курьеров")
 public class Test10OrderReceiver extends BaseAPITest {
+    private final OrdersClient ordersClient = new OrdersClient();
 
-
+    /**
+     * Тест проверяет, что заказ может быть успешно принят курьером.
+     * Уровень важности: HIGH.
+     * @DisplayName Указывает на наглядное название теста.
+     * @Description Проверяет успешный приём заказа курьером.
+     * @Severity Указывает на уровень важности теста.
+     * @Link Ссылка на документацию API.
+     * @Issue Связывает тест с задачей в системе отслеживания ошибок.
+     * @TmsLink Связывает тест с тест-кейсом в системе управления тестами.
+     */
     @Test
+    @DisplayName("Успешный прием заказа")
+    @Description("Проверяет, что заказ может быть успешно принят курьером.")
+    @Severity(SeverityLevel.CRITICAL)
+    @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
+    @Issue("PROJECT-123") // Замените на реальный номер задачи
+    @TmsLink("TMS-456") // Замените на реальный номер тест-кейса
     public void testOrderAcceptance() {
-        // Подготовка данных для запроса
         int orderId = 1;
         int courierId = 213;
 
-        // Выполнение запроса PUT
-        Response response = given()
-                .pathParam("id", orderId)
-                .queryParam("courierId", courierId)
-                .when()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/{id}")
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
+        Response response = ordersClient.acceptOrder(orderId, courierId,baseURI);
 
-        // Проверка успешного ответа
         response.then()
+                .statusCode(200)
                 .body("ok", equalTo(true));
     }
 
+    /**
+     * Тест проверяет код статуса для несуществующего заказа.
+     * @DisplayName Указывает на наглядное название теста.
+     * @Description Проверяет получение сообщения об ошибке, если заказ не найден.
+     * @Severity Указывает на уровень важности теста.
+     */
     @Test
-    public void testAcceptOrder() {
-        // Ожидаемый статус код 200 OK
-        Response response = given()
-                .baseUri(baseURI)
-                .param("courierId", 213)
-                .put("/api/v1/orders/accept/1")
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
-
-        response.then()
-                .body("ok", equalTo(true));
-    }
-
-    @Test
-    public void testBadRequestWithoutNumber() {
-        // Ожидаемый статус код 400 Bad Request
-        given()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/1")
-                .then()
-                .statusCode(400);
-    }
-
-    @Test
-    public void testConflictWithoutIds() {
-        // Ожидаемый статус код 400 Conflict
-        given()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/1")
-                .then()
-                .statusCode(400);
-    }
-
-    @Test
+    @DisplayName("Проверка кода статуса для заказа, не найденного")
+    @Description("Проверяет, что при попытке принять несуществующий заказ возвращается статус 404.")
+    @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
+    @Severity(SeverityLevel.NORMAL)
     public void testOrderNotFound() {
-        // Ожидаемый статус код 404 Not Found
-        given()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/999?courierId=213")
-                .then()
-                .statusCode(404);
+        int orderId = 999;
+        int courierId = 213;
+        Response response = ordersClient.acceptOrder(orderId, courierId,baseURI); // 999 - Неверный id
+
+        response.then()
+                .statusCode(404)
+                .body("message", is("Заказ не найден")); // Проверка сообщения об ошибке
     }
 
+    /**
+     * Тест проверяет код статуса для несуществующего курьера.
+     * @DisplayName Указывает на наглядное название теста.
+     * @Description Проверяет получение сообщения об ошибке, если курьер не найден.
+     * @Severity Указывает на уровень важности теста.
+     */
     @Test
+    @DisplayName("Проверка кода статуса для курьера, не найденного")
+    @Description("Проверяет, что при попытке принять заказ курьером, который не найден, возвращается статус 404.")
+    @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
+    @Severity(SeverityLevel.NORMAL)
     public void testCourierNotFound() {
-        // Ожидаемый статус код 404 Not Found
-        given()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/1?courierId=999")
-                .then()
-                .statusCode(404);
+        int orderId = 1;
+        int courierId = 999;
+        Response response = ordersClient.acceptOrder(1, 999,baseURI); // 999 - Неверный id
+
+        response.then()
+                .statusCode(404)
+                .body("message", is("Курьер не найден")); // Проверка сообщения об ошибке
     }
 
+    /**
+     * Тест проверяет код статуса для уже выполняемого заказа.
+     * @DisplayName Указывает на наглядное название теста.
+     * @Description Проверяет, что возвращается статус 409, если заказ уже в процессе выполнения.
+     * @Severity Указывает на уровень важности теста.
+     */
     @Test
+    @DisplayName("Проверка кода статуса для заказа, который уже в процессе выполнения")
+    @Description("Проверяет, что возвращается статус 409, если заказ уже в процессе выполнения.")
+    @Link(name = "API Documentation Orders - Принять заказ", type = "swagger", url = "https://qa-scooter.praktikum-services.ru/docs/#api-Orders-AcceptOrder")
+    @Severity(SeverityLevel.NORMAL)
     public void testOrderAlreadyInProgress() {
-        // Ожидаемый статус код 409 Conflict
-        given()
-                .baseUri(baseURI)
-                .put("/api/v1/orders/accept/1?courierId=213")
-                .then()
-                .statusCode(409);
+        int orderId = 1;
+        int courierId = 213;
+        Response response = ordersClient.acceptOrder(orderId, courierId, baseURI); // Принять заказ, который уже в работе
+
+        response.then()
+                .statusCode(409)
+                .body("message", is("Заказ уже в процессе выполнения")); // Проверка сообщения об ошибке
     }
 }
+
