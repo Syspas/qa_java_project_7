@@ -1,5 +1,6 @@
 import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -24,7 +25,45 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @Feature("Создание учетной записи курьера")
 @Story("Создание учетной записи курьера")
 public class Test2CreateCourierAccount extends BaseAPITest {
+
     static final Logger logger = LoggerFactory.getLogger(Test2CreateCourierAccount.class);
+
+    int createdCourierId = 123; // пример объявления переменной
+    // Далее можно использовать createdCourierId
+
+
+    /**
+     * Метод для удаления тестовых данных после выполнения тестов.
+     * Использует {@code this.createdCourierId} для удаления созданных данных.
+     */
+    @AfterEach
+    public void cleanupTestData() {
+        if (this.createdCourierId == createdCourierId) {
+            try {
+                // Выполняем DELETE запрос для удаления данных
+                Response response = given()
+                        .baseUri(baseURI)
+                        .when()
+                        .delete("/api/v1/courier/" + this.createdCourierId);
+
+                // Проверяем статус код ответа
+                if (response.getStatusCode() == 200) {
+                    System.out.println("Успешно удалены тестовые данные для курьера с ID: " + this.createdCourierId);
+                } else {
+                    System.err.println("Не удалось удалить тестовые данные для курьера с ID: " + this.createdCourierId +
+                            ". Получен некорректный статус код: " + response.getStatusCode());
+                }
+            } catch (Exception e) {
+                System.err.println("Не удалось удалить тестовые данные для курьера с ID: " + this.createdCourierId);
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
 
     @Test
     @DisplayName("Проверка создания учетной записи курьера с заданными параметрами")
@@ -159,6 +198,31 @@ public class Test2CreateCourierAccount extends BaseAPITest {
         logger.info("Тест завершен");
 
 
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
